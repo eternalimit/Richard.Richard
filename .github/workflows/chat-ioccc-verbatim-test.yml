@@ -8,22 +8,31 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+env:
+  FROZEN_INPUT: "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise"
 
 jobs:
-  test:
+  runtime:
     runs-on: ubuntu-latest
+    outputs:
+      result_commit: ${{ steps.commit-result.outputs.result_commit }}
+      result_path: ${{ steps.commit-result.outputs.result_path }}
     env:
       LLAMA2_LICENSE_ACCEPTED: "true"
+
     steps:
       - name: Checkout committed input
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Verify committed control state
         run: |
           test -s integrations/chat_ioccc/CONTROL_STATE.md
-          grep -Fqx "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise" integrations/chat_ioccc/CONTROL_STATE.md
-          echo "saved_commit=$GITHUB_SHA"
+          grep -Fqx "$FROZEN_INPUT" integrations/chat_ioccc/CONTROL_STATE.md
+          echo "source_commit=$GITHUB_SHA"
 
       - name: Install build/runtime dependencies
         run: |
@@ -54,10 +63,11 @@ jobs:
 
       - name: Write exact frozen test input
         run: |
-          printf '%s\n' "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise" > /tmp/verbatim.txt
-          test "$(cat /tmp/verbatim.txt)" = "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise"
+          printf '%s\n' "$FROZEN_INPUT" > /tmp/verbatim.txt
+          test "$(cat /tmp/verbatim.txt)" = "$FROZEN_INPUT"
 
-      - name: Run Echo
+      - name: Run model and preserve raw result
+        id: runtime
         working-directory: integrations/chat_ioccc
         run: |
           set +e
@@ -66,28 +76,82 @@ jobs:
           set -e
           cat /tmp/echo.out
           echo "exit_status=$status"
-          if [ "$status" -ne 0 ]; then
+          echo "exit_status=$status" >> "$GITHUB_OUTPUT"
+
+      - name: Save runtime output to repository
+        id: commit-result
+        env:
+          EXIT_STATUS: ${{ steps.runtime.outputs.exit_status }}
+        run: |
+          result_path="control-results/chat-ioccc/$GITHUB_SHA.md"
+          mkdir -p "$(dirname "$result_path")"
+
+          {
+            printf '# ChatIOCCC Runtime Result\n\n'
+            printf 'Source commit: %s\n\n' "$GITHUB_SHA"
+            printf 'Run ID: %s\n\n' "$GITHUB_RUN_ID"
+            printf 'Frozen input:\n\n'
+            printf '%s\n\n' "$FROZEN_INPUT"
+            printf 'Exit status: %s\n\n' "$EXIT_STATUS"
+            printf 'Raw output:\n\n'
+            printf '~~~text\n'
+            cat /tmp/echo.out
+            printf '\n~~~\n'
+          } > "$result_path"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$result_path"
+          git commit -m "Save ChatIOCCC runtime result for $GITHUB_SHA"
+          git push origin HEAD:main
+
+          result_commit="$(git rev-parse HEAD)"
+          echo "result_commit=$result_commit" >> "$GITHUB_OUTPUT"
+          echo "result_path=$result_path" >> "$GITHUB_OUTPUT"
+          echo "saved_result_commit=$result_commit"
+
+  echo_verify:
+    needs: runtime
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout saved result commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.runtime.outputs.result_commit }}
+          fetch-depth: 1
+
+      - name: Verify committed provenance
+        env:
+          RESULT_PATH: ${{ needs.runtime.outputs.result_path }}
+          RESULT_COMMIT: ${{ needs.runtime.outputs.result_commit }}
+        run: |
+          test -n "$RESULT_COMMIT"
+          test -s "$RESULT_PATH"
+          test "$(git rev-parse HEAD)" = "$RESULT_COMMIT"
+          grep -Fq "Frozen input:" "$RESULT_PATH"
+          grep -Fqx "$FROZEN_INPUT" "$RESULT_PATH"
+
+      - name: Independent implementation Echo
+        env:
+          RESULT_PATH: ${{ needs.runtime.outputs.result_path }}
+        run: |
+          fail() {
             echo "TCGE=HOLD"
-            echo "reason=runtime failed"
-            exit 1
-          fi
-          test -s /tmp/echo.out || {
-            echo "TCGE=HOLD"
-            echo "reason=runtime produced no output"
+            echo "reason=$1"
             exit 1
           }
 
-      - name: Independent Echo gate
-        run: |
-          test -s /tmp/echo.out || {
-            echo "TCGE=HOLD"
-            echo "reason=no saved runtime artifact"
-            exit 1
-          }
-          if grep -Eiq '(^|[^A-Z])(HOLD|ERROR|FAILED|FAILURE)([^A-Z]|$)' /tmp/echo.out; then
-            echo "TCGE=HOLD"
-            echo "reason=runtime artifact contains failure/hold state"
-            exit 1
+          grep -Fq "Exit status: 0" "$RESULT_PATH" || fail "runtime exit status was not zero"
+
+          grep -Fqi 'Hello, Enterprise!' "$RESULT_PATH" || fail "output did not contain the required Enterprise greeting"
+          grep -Fqi 'Hello, World!' "$RESULT_PATH" || fail "output did not contain the required Hello World greeting"
+          grep -Eqi 'epiente[^[:alnum:]]+--son' "$RESULT_PATH" || fail "output did not contain a son-generation command"
+
+          if grep -Eiq '(^|[^A-Z])(ERROR|FAILED|FAILURE)([^A-Z]|$)' "$RESULT_PATH"; then
+            fail "saved runtime artifact contains a failure marker"
           fi
+
           echo "TCGE=PASS"
-          echo "reason=saved committed input produced a nonempty successful runtime artifact and independent gate found no failure state"
+          echo "echo_type=independent implementation validation"
+          echo "reason=committed runtime artifact independently satisfied the frozen provenance, exit-status, and semantic criteria"
