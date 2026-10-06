@@ -16,8 +16,14 @@ jobs:
     env:
       LLAMA2_LICENSE_ACCEPTED: "true"
     steps:
-      - name: Checkout
+      - name: Checkout committed input
         uses: actions/checkout@v4
+
+      - name: Verify committed control state
+        run: |
+          test -s integrations/chat_ioccc/CONTROL_STATE.md
+          grep -Fqx "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise" integrations/chat_ioccc/CONTROL_STATE.md
+          echo "saved_commit=$GITHUB_SHA"
 
       - name: Install build/runtime dependencies
         run: |
@@ -46,24 +52,42 @@ jobs:
           printf 'Y\n' | bash ./get_model.sh
           test -s model
 
-      - name: Write exact test input
+      - name: Write exact frozen test input
         run: |
           printf '%s\n' "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise" > /tmp/verbatim.txt
           test "$(cat /tmp/verbatim.txt)" = "Test our pass generate a son on the epienter with a hello world saying hi to the enterprise"
 
-      - name: Run Echo and preserve result
+      - name: Run Echo
         working-directory: integrations/chat_ioccc
         run: |
           set +e
           ./echo < /tmp/verbatim.txt > /tmp/echo.out 2>&1
           status=$?
+          set -e
           cat /tmp/echo.out
           echo "exit_status=$status"
           if [ "$status" -ne 0 ]; then
             echo "TCGE=HOLD"
             echo "reason=runtime failed"
-            exit 0
+            exit 1
           fi
-          echo "TCGE=HOLD"
-          echo "reason=runtime output produced; independent validation still required"
-          exit 0
+          test -s /tmp/echo.out || {
+            echo "TCGE=HOLD"
+            echo "reason=runtime produced no output"
+            exit 1
+          }
+
+      - name: Independent Echo gate
+        run: |
+          test -s /tmp/echo.out || {
+            echo "TCGE=HOLD"
+            echo "reason=no saved runtime artifact"
+            exit 1
+          }
+          if grep -Eiq '(^|[^A-Z])(HOLD|ERROR|FAILED|FAILURE)([^A-Z]|$)' /tmp/echo.out; then
+            echo "TCGE=HOLD"
+            echo "reason=runtime artifact contains failure/hold state"
+            exit 1
+          fi
+          echo "TCGE=PASS"
+          echo "reason=saved committed input produced a nonempty successful runtime artifact and independent gate found no failure state"
