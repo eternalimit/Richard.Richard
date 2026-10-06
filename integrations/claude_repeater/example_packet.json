@@ -1,0 +1,11 @@
+{
+  "objective": "Verify whether a candidate faithfully reconstructs a source image",
+  "evidence": [
+    {
+      "id": "E1",
+      "claim": "Use the supplied source image as the topology master",
+      "source": "current-session user attachment"
+    }
+  ],
+  "candidate": "Candidate answer to be independently checked"
+}
