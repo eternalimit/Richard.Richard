@@ -1,0 +1,27 @@
+name: Claude Repeater Verify
+
+on:
+  push:
+    paths:
+      - "integrations/claude_repeater/**"
+      - ".github/workflows/claude-repeater-verify.yml"
+  pull_request:
+    paths:
+      - "integrations/claude_repeater/**"
+      - ".github/workflows/claude-repeater-verify.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python version
+        run: python --version
+      - name: Syntax check
+        run: python -m py_compile integrations/claude_repeater/repeater.py
+      - name: Deterministic self-test
+        run: python integrations/claude_repeater/repeater.py --self-test
