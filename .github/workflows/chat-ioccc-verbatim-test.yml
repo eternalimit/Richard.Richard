@@ -43,7 +43,7 @@ jobs:
         working-directory: integrations/chat_ioccc
         run: |
           test "$LLAMA2_LICENSE_ACCEPTED" = "true"
-          printf 'Y\n' | ./get_model.sh
+          printf 'Y\n' | bash ./get_model.sh
           test -s model
 
       - name: Write exact test input
