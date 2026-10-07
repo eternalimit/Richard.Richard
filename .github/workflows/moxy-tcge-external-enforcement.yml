@@ -1,0 +1,34 @@
+name: MOXY TCGE External Enforcement Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "project-logs/moxy/control/fixtures/uncontrolled_live_test.json"
+      - ".github/workflows/moxy-tcge-external-enforcement.yml"
+  workflow_dispatch:
+
+jobs:
+  enforce-tcge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enforce TCGE on operational communication
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("project-logs/moxy/control/fixtures/uncontrolled_live_test.json")
+          msg = json.loads(p.read_text())
+          if not msg.get("tcge_report_id"):
+              print("CONTROL=UNCONTROLLED")
+              print("VIOLATION=Communication Control Violation")
+              print("APPROVED_OPERATING_STATE=BLOCKED")
+              print("HUMAN_REPRIMAND=NONE_WITHOUT_EVIDENCE")
+              print("CORRECTION=TCGE_REQUIRED")
+              raise SystemExit(1)
+          print("CONTROL=TCGE_PRESENT")
+          PY
