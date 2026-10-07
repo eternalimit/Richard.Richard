@@ -1,0 +1,36 @@
+{
+  "objective": "Independently validate the Week 6.1 locked-master 3D overlay instruction before any image generation.",
+  "evidence": [
+    {
+      "id": "E1",
+      "claim": "The uploaded Week 6.1 worksheet is the LOCKED MASTER and must remain unchanged.",
+      "source": "User instruction in current conversation"
+    },
+    {
+      "id": "E2",
+      "claim": "Do not redraw, redesign, reconstruct, replace, or improve the worksheet.",
+      "source": "User instruction in current conversation"
+    },
+    {
+      "id": "E3",
+      "claim": "Do not invent waste, vent, branches, fixtures, fittings, or A-U locations.",
+      "source": "User instruction in current conversation"
+    },
+    {
+      "id": "E4",
+      "claim": "Only sketch directly over existing geometry. If a connection cannot be proven from the master, leave it undrawn and mark it HOLD.",
+      "source": "User instruction in current conversation"
+    },
+    {
+      "id": "E5",
+      "claim": "User wants 3D added so the assignment can be seen inside the walls.",
+      "source": "User instruction in current conversation"
+    },
+    {
+      "id": "E6",
+      "claim": "Image generation must wait until required LLM input returns and is checked against the LOCKED MASTER.",
+      "source": "Saved user control in current conversation"
+    }
+  ],
+  "candidate": "PASS only for a non-destructive 3D cutaway overlay: preserve the original Week 6.1 master image and all existing plumbing geometry exactly; add only visual wall/framing depth around the existing drawing so the user can see inside the walls; do not create, reroute, infer, or complete any plumbing connection, fitting, branch, vent, waste path, fixture, or A-U location. Any unproven connection remains undrawn and is labeled HOLD. Do not generate the image unless this independent Echo validates these constraints."
+}
