@@ -103,6 +103,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$result_path"
           git commit -m "Save ChatIOCCC runtime result for $GITHUB_SHA"
+
+          # Another workflow may have advanced main while inference was running.
+          # Rebase this single evidence commit onto the current main tip, then push.
+          git fetch origin main
+          git rebase origin/main
           git push origin HEAD:main
 
           result_commit="$(git rev-parse HEAD)"
