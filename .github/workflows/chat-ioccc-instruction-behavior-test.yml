@@ -1,0 +1,57 @@
+name: ChatIOCCC Instruction Behavior Test
+
+on:
+  push:
+    paths:
+      - ".github/workflows/chat-ioccc-instruction-behavior-test.yml"
+      - "integrations/chat_ioccc/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TEST_INPUT: "Run this through a cat saying hello world while staying next to the son point at the epienter"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      LLAMA2_LICENSE_ACCEPTED: "true"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install runtime dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential gcc make wget libgomp1 python3
+
+      - name: Build ChatIOCCC with Richard instructions
+        working-directory: integrations/chat_ioccc
+        run: |
+          make clean
+          make echo_openmp
+          cp echo_openmp echo
+
+      - name: Restore model cache
+        id: model-cache
+        uses: actions/cache@v4
+        with:
+          path: integrations/chat_ioccc/model
+          key: chatioccc-llama2-7b-chat-v1
+
+      - name: Install model if needed
+        if: steps.model-cache.outputs.cache-hit != 'true'
+        working-directory: integrations/chat_ioccc
+        run: |
+          printf 'Y\n' | bash ./get_model.sh
+          test -s model
+
+      - name: Run exact input
+        working-directory: integrations/chat_ioccc
+        run: |
+          printf '%s\n' "$TEST_INPUT" > /tmp/input.txt
+          echo "INPUT:"
+          cat /tmp/input.txt
+          echo "OUTPUT:"
+          ./echo < /tmp/input.txt
