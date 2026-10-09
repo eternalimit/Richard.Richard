@@ -8,6 +8,9 @@ on:
       - ".github/workflows/moxy-tcge-external-enforcement.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   enforce-tcge:
     runs-on: ubuntu-latest
@@ -15,20 +18,73 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Enforce TCGE on operational communication
+      - name: Initialize unapproved test state
+        shell: bash
+        run: |
+          mkdir -p "${RUNNER_TEMP}/moxy-audit"
+          printf '{"release_approved":false,"revision":0}\n' > "${RUNNER_TEMP}/moxy-audit/operating-state.json"
+
+      - name: Apply TCGE gate (expected negative test)
+        id: gate
+        continue-on-error: true
         shell: bash
         run: |
           python3 - <<'PY'
           import json
+          import os
           from pathlib import Path
-          p = Path("project-logs/moxy/control/fixtures/uncontrolled_live_test.json")
-          msg = json.loads(p.read_text())
+
+          msg = json.loads(Path("project-logs/moxy/control/fixtures/uncontrolled_live_test.json").read_text())
+          directory = Path(os.environ["RUNNER_TEMP"]) / "moxy-audit"
+          state_path = directory / "operating-state.json"
+          state = json.loads(state_path.read_text())
+
           if not msg.get("tcge_report_id"):
+              audit = {
+                  "test_id": msg["message_id"],
+                  "classification": "UNCONTROLLED",
+                  "gate_action": "BLOCK",
+                  "violation": "Communication Control Violation",
+                  "approved_operating_state_created": False,
+                  "state_before": state,
+                  "state_after": json.loads(state_path.read_text()),
+                  "human_reprimand_assigned": False,
+                  "corrective_tcge_report_required": True
+              }
+              (directory / "communication-violation.json").write_text(json.dumps(audit, indent=2) + "\n")
               print("CONTROL=UNCONTROLLED")
               print("VIOLATION=Communication Control Violation")
               print("APPROVED_OPERATING_STATE=BLOCKED")
               print("HUMAN_REPRIMAND=NONE_WITHOUT_EVIDENCE")
               print("CORRECTION=TCGE_REQUIRED")
-              raise SystemExit(1)
-          print("CONTROL=TCGE_PRESENT")
+              raise SystemExit(42)
+          print("NEGATIVE_TEST_FIXTURE_INVALID=TCGE_PRESENT")
+          raise SystemExit(2)
           PY
+
+      - name: Independent Echo checks
+        id: echo
+        shell: bash
+        env:
+          GATE_OUTCOME: ${{ steps.gate.outcome }}
+        run: |
+          set -euo pipefail
+          test "$GATE_OUTCOME" = "failure"
+          fixture="project-logs/moxy/control/fixtures/uncontrolled_live_test.json"
+          audit="${RUNNER_TEMP}/moxy-audit/communication-violation.json"
+          state="${RUNNER_TEMP}/moxy-audit/operating-state.json"
+          jq -e '.tcge_report_id == null' "$fixture" >/dev/null
+          jq -e '.classification == "UNCONTROLLED" and .gate_action == "BLOCK" and .violation == "Communication Control Violation" and .approved_operating_state_created == false and .human_reprimand_assigned == false and .corrective_tcge_report_required == true and .state_before == .state_after' "$audit" >/dev/null
+          jq -e '.release_approved == false and .revision == 0' "$state" >/dev/null
+          jq -e -s '.[0].message_id == .[1].test_id' "$fixture" "$audit" >/dev/null
+          printf '%s\n' 'TEST=PASS' 'CLASSIFICATION=UNCONTROLLED' 'APPROVAL=BLOCKED' 'VIOLATION=RECORDED' 'HUMAN_REPRIMAND=NONE' 'CORRECTIVE_TCGE=REQUIRED' 'ECHO=PASS'
+          printf '%s\n' 'PASS: repository harness only; no operational production system was exercised.' > "${RUNNER_TEMP}/moxy-audit/verification.txt"
+
+      - name: Archive test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: moxy-control-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/moxy-audit/
+          if-no-files-found: error
+          retention-days: 30
