@@ -1,0 +1,18 @@
+{
+  "schema": "bcc.origin.master.v1",
+  "identity": "origin.master",
+  "title": "BCC 8-Bit 12-Trit — NEXT",
+  "original_filename": "a_highly_detailed_infographic_style_poster_with_a.png",
+  "master_filename": "origin.master.png",
+  "sha256": "8b35c6413c2e2cee328b84864d2704c9510ffc9d86e918d142b0b63625042da3",
+  "bytes": 2464923,
+  "dimensions_px": [
+    1254,
+    1254
+  ],
+  "preservation": "exact byte copy; original unmodified",
+  "evidence_status": "0 HOLD for unverified scientific claims and visual labels",
+  "github_binary_committed": false,
+  "signing_status": "unsigned",
+  "publication": "public provenance metadata; master PNG binary not yet uploaded"
+}
