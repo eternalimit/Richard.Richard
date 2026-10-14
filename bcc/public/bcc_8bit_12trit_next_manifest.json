@@ -1,0 +1,12 @@
+{
+  "schema": "bcc.next.public.v1",
+  "title": "BCC 8-Bit 12-Trit — NEXT",
+  "source_png": "a_highly_detailed_infographic_style_poster_with_a.png",
+  "sha256": "8b35c6413c2e2cee328b84864d2704c9510ffc9d86e918d142b0b63625042da3",
+  "bytes": 2464923,
+  "source_binary_committed": false,
+  "cycle_rule": "each trit advances modulo 3",
+  "state_count": 531441,
+  "verification_status": "0 HOLD — illustration not independent biological or security proof",
+  "release_scope": "public metadata only"
+}
