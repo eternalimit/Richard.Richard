@@ -1,0 +1,19 @@
+{
+  "schema": "everify.upload.audit.v1",
+  "original_filename": "1234e_8bit_12trit_everify(2).zip",
+  "archived_filename": "1234e_8bit_12trit_everify.zip",
+  "size_bytes": 1385705,
+  "sha256": "fcc4c526d86d72e7b052a3aacf6cf00ca4845c672a3e82ebcb0a828e3ac604f2",
+  "checks": {
+    "zip_crc": "PASS",
+    "four_receipt_hashes": "PASS",
+    "csv_json_agreement": "PASS",
+    "five_numeric_conversions": "PASS",
+    "fixed_widths": "PASS",
+    "image_decode": "PASS"
+  },
+  "source_bytes": "unchanged",
+  "external_verification": "NOT ESTABLISHED",
+  "image_receipt_claims": "Displayed historical size and hash do not describe this ZIP.",
+  "relationship": "Separate uploaded artifact; does not replace previously generated package."
+}
