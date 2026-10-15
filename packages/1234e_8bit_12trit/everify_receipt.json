@@ -1,0 +1,11 @@
+{
+  "schema": "everify.archive.receipt.v1",
+  "package": "1234e_8bit_12trit.zip",
+  "size_bytes": 634257,
+  "sha256": "9875601019e4dd6ba0e5b0a6427de7c8175857d1528242b75f0a8f22c8c74140",
+  "zip_crc": "PASS",
+  "zip_member_hashes": "PASS",
+  "internal_receipt_sha256": "e63ba842fc4087ee397a14d6ad5b692bf9c48dfcdf9971c1feba1632979f4003",
+  "verification_scope": "Local encoding and byte-integrity verification; unsigned",
+  "created_at_utc": "2026-10-15T02:00:06.736591+00:00"
+}
