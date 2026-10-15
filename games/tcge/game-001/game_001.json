@@ -1,0 +1,88 @@
+{
+  "id": "TCGE.GAME.001",
+  "classification": "PUBLIC GAMEPLAY / proposed extension; ORIGIN.MASTER unchanged",
+  "origin_master_sha256": "55f34437a8e0e3248e5bcf867a2b82302e42fcdbda7ce9728f0b6f13d5292434",
+  "target_board": [
+    [
+      0,
+      1,
+      2,
+      0
+    ],
+    [
+      1,
+      2,
+      0,
+      1
+    ],
+    [
+      2,
+      0,
+      1,
+      2
+    ]
+  ],
+  "initial_board": [
+    [
+      2,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      2,
+      2,
+      2
+    ],
+    [
+      0,
+      1,
+      1,
+      1
+    ]
+  ],
+  "move_budget": 8,
+  "legal_move": "Swap vertically adjacent cells within the same column; rows 1-2 or 2-3; one move per swap.",
+  "win_conditions": {
+    "win_1": "Reach target with legal moves within budget",
+    "win_2": "Prove optimality via exhaustive shortest-path search",
+    "win_3": "Independent verifier checks replay and optimality"
+  },
+  "solution_moves": [
+    {
+      "column_1_based": 1,
+      "upper_row_1_based": 1
+    },
+    {
+      "column_1_based": 1,
+      "upper_row_1_based": 2
+    },
+    {
+      "column_1_based": 1,
+      "upper_row_1_based": 1
+    },
+    {
+      "column_1_based": 2,
+      "upper_row_1_based": 1
+    },
+    {
+      "column_1_based": 2,
+      "upper_row_1_based": 2
+    },
+    {
+      "column_1_based": 2,
+      "upper_row_1_based": 1
+    },
+    {
+      "column_1_based": 3,
+      "upper_row_1_based": 1
+    },
+    {
+      "column_1_based": 4,
+      "upper_row_1_based": 2
+    }
+  ],
+  "minimum_moves": 8,
+  "reachable_states": 1296
+}
