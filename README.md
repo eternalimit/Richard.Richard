@@ -27,5 +27,5 @@ Notion databases
 Agent orchestration layers
 
 Extend Clarity
-To integrate with Notion, agent stacks, or your OS logic, contact the Clarity core or extend via Clarity∞ Constitution & Agent Mesh.
+To integrate with Notion, agent stacks, or your OS logic, contact the Clarity core or extend via Clearsi Constitution & Continuity Pi Agent Mesh.
 
