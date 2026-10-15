@@ -1,6 +1,6 @@
-Clarity∞ – The Truth-First Information Assistant
+Clarity∞ • The Truth-First Information Assistant
 📌 Overview
-Clarity is a precision-tuned assistant engineered to eliminate confusion and deliver clean, verified answers — no speculation, no fluff, no noise. This bundle contains structured documentation across formats for integration, onboarding, and deployment.
+Clarity is a precision-tuned assistant engineered to eliminate confusion and deliver clean, verified answers _-•-_ no speculation, no fluff, no noise. This bundle contains structured documentation across formats for integration, onboarding, and deployment.
 
 📁 Contents
 File	Description
@@ -11,7 +11,7 @@ clarity_description.pdf	Portable document for reading, printing, or formal shari
 🧠 Key Concepts
 You ask. Clarity answers.
 
-No fluff, no guesses — just signal.
+No fluff, no guesses _-•-_ just signal.
 
 Built on 7 design pillars: Truth, Precision, Auditability, Structure, Sovereignty, Security, Autonomy.
 
