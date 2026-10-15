@@ -1,0 +1,23 @@
+{
+  "schema": "richard.intent.declaration.v1",
+  "declarant": "Richard Stein",
+  "exact_user_words": "That’s my intent this is Richard this is my intent this is mine I own this all rights reserved commit alls",
+  "prior_signature_statement": "I signed it with this",
+  "rights_declaration": "All rights reserved",
+  "ownership_status": "Ownership asserted by Richard Stein in his declaration.",
+  "signature_meaning": "Richard Stein designates the accompanying IMG_6474.jpeg as his signature for the uploaded package.",
+  "statement_time": "2026-10-14T19:15:55-07:00",
+  "signature_image": {
+    "filename": "IMG_6474.jpeg",
+    "size": 450478,
+    "sha256": "1e002c8706298ae45d79b18cc157e3ae01f5c1b19cd590a0bd7f1d63d00cf9a7",
+    "git_blob_sha": "5e91e076be075e9e1446c75f861046ce06231175"
+  },
+  "package": {
+    "path": "packages/1234e_8bit_12trit_uploaded/1234e_8bit_12trit_everify.zip",
+    "sha256": "fcc4c526d86d72e7b052a3aacf6cf00ca4845c672a3e82ebcb0a828e3ac604f2",
+    "commit": "e19c74364c12c1d2ba44b5efbceb2e109910b817"
+  },
+  "verification_scope": "Image bytes hashed and preserved; intent and ownership recorded as the declarant's statements. This record does not add a cryptographic Git commit signature or independently establish ownership.",
+  "origin_master": "Preserved"
+}
