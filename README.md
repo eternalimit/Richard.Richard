@@ -4,7 +4,7 @@ Clarity is a precision-tuned assistant engineered to eliminate confusion and del
 
 📁 Contents
 File	Description
-clarity_description.md	Full documentation in Markdown — suitable for Notion, GitHub, or static site generation.
+clarity_description.md	Full documentation in Markdown _-•-_ suitable for Notion, GitHub, or static site generation.
 clarity_description.json	JSON-formatted version for programmatic use, embedding in tools, or parsing in apps.
 clarity_description.pdf	Portable document for reading, printing, or formal sharing. Clean, emoji-free version.
 
