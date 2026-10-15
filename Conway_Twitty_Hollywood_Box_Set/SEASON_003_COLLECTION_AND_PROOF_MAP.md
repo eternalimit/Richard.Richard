@@ -12,7 +12,20 @@ Creator / original material: **Richard Stein. All Rights Reserved.**
 |---|---|---|
 | 001 | Hello, Darlin' | Existing development material; seven proposed groupings |
 | 002 | The Tickets in the Mail | Existing development material; eight proposed groupings |
-| 003 | Jason, Get the Lights! | New continuity index; not a verified completed season |
+| 003 | The Ticket's in the Mail! — Hollywood, the Moon & Beyond | Existing Sneak Peek guide (301–320) and Episode 319 draft; this file is a supplemental index |
+
+## Canonical Sneak Peek continuation (source of truth)
+
+This index **continues** the existing Season 003 Sneak Peek and does not replace, rename, or supersede its 20-episode guide or Episode 319 screenplay.
+
+- [Sneak Peek README](SNEAK_PEEK_SEASON_003/README.md)
+- [Season 003 20-episode guide, episodes 301–320](SNEAK_PEEK_SEASON_003/SEASON_003_EPISODE_GUIDE.md)
+- [Complete first-draft Episode 319: Jason, Get the Lights!](SNEAK_PEEK_SEASON_003/EPISODE_319_JASON_GET_THE_LIGHTS.md)
+- Original sneak-peek source commit: `c3cc97016591c934716cd277a3b83e373d0f3e6a`
+
+**Canonical sequence:** Episode 318 “Who's Cooking the Books? The Trial” → Episode 319 “Jason, Get the Lights!” → Episode 320 “Hello, Hollywood. Goodnight, Darlin'.” In Episode 319, Nolan directs, the Hollywood tickets are recovered beneath his chair, and the final gold envelope reads “One last spotlight.” The later cat/dog/baby, unnamed old-cat remembrance, red-light, commercial, and fade-to-gray scenes are **supplemental proposed encore material**, not verified numbered episodes or a replacement Season 003 finale.
+
+**Naming correction:** Season 003's canonical guide title is **“The Ticket's in the Mail! — Hollywood, the Moon & Beyond”**; “Jason, Get the Lights!” is Episode 319, not the title of the entire season.
 
 ## Season 003 — continuity / scramble map
 
