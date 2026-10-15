@@ -1,0 +1,16 @@
+{
+  "schema": "private-art-provenance-v1",
+  "date_utc": "2026-10-15",
+  "asset_label": "Private stone spiral artwork",
+  "sha256": "d07703c56fffccef5d4e08ac9d431c415ae254acf721116d559a1d707ba22428",
+  "media_type": "image/jpeg",
+  "width": 1408,
+  "height": 768,
+  "rights": "Third-party ownership not independently verified; no claim of authorship or transfer",
+  "publication_scope": "Verification metadata only; original artwork not published",
+  "state": "0 HOLD for original image",
+  "audit_method": "SHA-256 computed from locally supplied original bytes; JPEG metadata inspected",
+  "limitations": "Hash establishes byte identity only, not ownership, creation date, license, or consent. No cryptographic signature asserted.",
+  "origin_master": "unchanged",
+  "repository": "eternalimit/Richard.Richard"
+}
