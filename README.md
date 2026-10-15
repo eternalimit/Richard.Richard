@@ -29,3 +29,44 @@ Agent orchestration layers
 Extend Clarity
 To integrate with Notion, agent stacks, or your OS logic, contact the Clarity core or extend via Clearsi Constitution & Continuity Pi Agent Mesh.
 
+---
+
+## Repository image gallery
+
+These previews use relative paths to image files tracked on the `main` branch. Select an image to open the original file in GitHub.
+
+### Conway & Twitty Poster
+
+[![Conway & Twitty Poster](./Conway_Twitty_Poster.png)](./Conway_Twitty_Poster.png)
+
+### TCGE Game Board
+
+[![TCGE Game Board](./TCGEGAMEBOARD.png)](./TCGEGAMEBOARD.png)
+
+### Clarity Circle Logo
+
+[![Clarity Circle Logo](./clarity_logo_circle.png)](./clarity_logo_circle.png)
+
+### Clarity Full Logo
+
+[![Clarity Full Logo](./clarity_logo_full.png)](./clarity_logo_full.png)
+
+### Image 6432
+
+[![Image 6432](./IMG_6432.jpeg)](./IMG_6432.jpeg)
+
+### Image 6433
+
+[![Image 6433](./IMG_6433.jpeg)](./IMG_6433.jpeg)
+
+### Image 6434
+
+[![Image 6434](./IMG_6434.jpeg)](./IMG_6434.jpeg)
+
+### GitHub issue artwork
+
+- [Issue #21 — .Daniel.](https://github.com/eternalimit/Richard.Richard/issues/21) contains a separately hosted image attachment.
+
+## Rights and provenance
+
+Richard Stein — All Rights Reserved (author's designation for original work). Third-party artwork, characters, and other materials retain their respective rights. The gallery is an index of repository assets, not a cryptographic authenticity or token-access certification.
