@@ -70,3 +70,10 @@ These previews use relative paths to image files tracked on the `main` branch. S
 ## Rights and provenance
 
 Richard Stein — All Rights Reserved (author's designation for original work). Third-party artwork, characters, and other materials retain their respective rights. The gallery is an index of repository assets, not a cryptographic authenticity or token-access certification.
+
+
+## MU Puppy Chow — MASTER.ORIGIN · 0 HOLD (2026-10-16)
+
+[Commercial script and image handoff](Conway_Twitty_Hollywood_Box_Set/MU_Puppy_Chow_MASTER_ORIGIN_2026-10-16.md) · [Production manifest](Conway_Twitty_Hollywood_Box_Set/MU_Puppy_Chow_MANIFEST_2026-10-16.json).
+
+MU is a fawn-colored pug puppy. The fictional Conway Twitty's Puppy Chow commercial features Conway kneeling beside MU, gently petting his head as MU eats chow under a golden spotlight. **Image pending; no image generated.** Script/metadata only, **0 HOLD**, no commercial release, endorsement or third-party rights clearance asserted. Richard Stein. All Rights Reserved.
